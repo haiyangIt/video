@@ -5,7 +5,7 @@ use EasyWeChat\Factory;
 $options = [
     'app_id'    => 'wx46c1048f6dd37723',
     'secret'    => '15d3ecb0f6b685302c7e268859221991',
-    'token'     => 'haiyangtestphp',
+    'token'     => 'haiyangtest',
     'log' => [
         'level' => 'debug',
         'file'  => '/tmp/easywechat.log',
@@ -15,15 +15,9 @@ $options = [
 
 $app = Factory::officialAccount($options);
 
-$server = $app->server;
-$user = $app->user;
+$response = $app->server->serve();
 
-$server->push(function($message) use ($user) {
-    $fromUser = $user->get($message['FromUserName']);
-
-    return "{$fromUser->nickname} 您好！欢迎关注 overtrue!";
-});
-
-$server->serve()->send();
+// 将响应输出
+$response->send(); // Laravel 里请使用：return $response;
 
 ?>
